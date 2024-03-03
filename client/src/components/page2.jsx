@@ -24,7 +24,7 @@ function Page2() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`http://localhost:5000/page2/${employeeId}`, formData, { withCredentials: true }); // Include employeeId in the URL
+            await axios.post(`https://form1-1-9jj6.onrender.com/page2/${employeeId}`, formData, { withCredentials: true }); // Include employeeId in the URL
             console.log('Data submitted successfully!');
             nav("/page3");
             
