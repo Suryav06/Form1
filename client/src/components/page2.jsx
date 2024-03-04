@@ -23,7 +23,7 @@ function Page2(props) {
     try {
       console.log(dataToSend);
       const response = await axios.post(
-        "https://employee-management-ehw7.onrender.com/page2",
+        "https://form1-qbdl.onrender.com/page2",
         dataToSend
       );
 
