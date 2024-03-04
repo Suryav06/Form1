@@ -30,7 +30,7 @@ function Page2(props) {
       if (response.data === "0") alert("Invalid Salary");
       else {
         alert("Added");
-        navi("/");
+        navi("/employees");
         console.log("Data submitted successfully:", response.data);
       }
     } catch (error) {
