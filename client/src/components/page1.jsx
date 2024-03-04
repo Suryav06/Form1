@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
 import "../style/page1.scss";
-function Page1() {
-    const navigate = useNavigate();
 
+function Page1() {
+    
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         employeeName: '',
         employeeId: '',
@@ -17,34 +17,31 @@ function Page1() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        setFormData({ ...formData, [name]: value });
     };
+
+    useEffect(() => {
+        console.log(formData);
+    }, [formData]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            
             if (!formData.employeeName || !formData.employeeId || !formData.department || !formData.dob || !formData.gender || !formData.designation || !formData.salary) {
                 alert('Please fill in all fields');
                 return;
             }
 
-            
             if (formData.employeeName.length > 30) {
                 alert('Employee name must be within 30 characters');
                 return;
             }
 
-          
             if (formData.salary < 0 || formData.salary.length > 8) {
                 alert('Salary cannot be negative and must be within 8 digits');
                 return;
             }
-    
-            
+
             const today = new Date();
             const birthDate = new Date(formData.dob);
             let age = today.getFullYear() - birthDate.getFullYear();
@@ -52,19 +49,14 @@ function Page1() {
             if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
                 age--;
             }
-    
-           
+
             if (age < 18) {
                 alert('Employee must be 18 years or older');
                 return;
             }
-    
-            
-            const { employeeId, ...data } = formData;
-            await axios.post('https://form1-m2r7.onrender.com/page1', formData);
-            
-            navigate(`/page2/${employeeId}`, { state: { formData: data } });
-            
+
+           
+            navigate('/page2', { state: formData });
         } catch (error) {
             console.error('Error:', error);
         }
@@ -111,7 +103,7 @@ function Page1() {
                 </select>
                 <label htmlFor="salary">Salary:</label>
                 <input type="number" id="salary" name="salary" maxLength="8" value={formData.salary} onChange={handleChange} required />
-                <button type="submit">Next</button>
+                <button type="submit">Next</button> 
             </form>
         </div>
     );

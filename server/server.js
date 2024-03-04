@@ -18,26 +18,24 @@ const pool = new pg.Pool({
     port: 50013, 
 }); 
 
-app.post('/page1', async (req, res) => {
-    try {
-        const { employeeName, employeeId, department, dob, gender, designation, salary } = req.body;
-        await pool.query('INSERT INTO employee(employeename, employeeidnumber, department, dateofbirth, gender, designation, salary) VALUES($1, $2, $3, $4, $5, $6, $7)', [employeeName, employeeId, department, dob, gender, designation, salary]);
-        res.status(201).json({ message: 'Data submitted successfully!' });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'An error occurred while processing your request.' });
-    }
-}); 
 
-app.post('/page2/:employeeId', async (req, res) => {
+
+app.post('/page2', async (req, res) => {
     try {
-        const { phoneNumber, address } = req.body;
-        const employeeId = req.params.employeeId; 
-        await pool.query('UPDATE employee SET phone_number=$1, address=$2 WHERE employeeidnumber=$3', [phoneNumber, address, employeeId]);
-        res.status(201).json({ message: 'Data submitted successfully!' });
+        const { employeeName, employeeId, department, dob, gender, designation, salary ,phoneNumber,address } = req.body;
+        console.log(employeeName,"safs")
+        if(salary<0||salary>99999999) return res.json("0")
+        const query = `
+            INSERT INTO employee (employeename, employeeidnumber, department, dateofbirth, gender, designation, salary,phone_number,address)
+            VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9)
+        `;
+        await pool.query(query, [employeeName, employeeId, department, dob, gender, designation, salary,phoneNumber,address]);
+
+        res.status(200).send('Form data inserted successfully');
+        console.log("data sent");
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'An error occurred while processing your request.' });
+        console.error('Error inserting form data:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
