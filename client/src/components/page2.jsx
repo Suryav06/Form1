@@ -23,7 +23,7 @@ function Page2(props) {
     try {
       console.log(dataToSend);
       const response = await axios.post(
-        "http://localhost:5000/page2",
+        "https://form1-3wtr.onrender.com/page2",
         dataToSend
       );
 
