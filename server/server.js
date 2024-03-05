@@ -18,8 +18,6 @@ const pool = new pg.Pool({
     port: 50013, 
 }); 
 
-
-
 app.post('/page2', async (req, res) => {
     try {
         const { employeeName, employeeId, department, dob, gender, designation, salary ,phoneNumber,address } = req.body;
@@ -39,16 +37,18 @@ app.post('/page2', async (req, res) => {
     }
 });
 
-app.get('/employees', async (req, res) => {
+app.get("/getdata", async (req, res) => {
     try {
-        const employees = await pool.query('SELECT * FROM employee');
-        res.status(200).json(employees.rows);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'An error occurred while processing your request.' });
+        console.log("vandach")
+        const getquery = "SELECT * FROM employee";
+        const data = await pool.query(getquery);
+        console.log(data.rows);
+        res.json(data.rows); 
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Internal Server Error" }); 
     }
 });
-
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

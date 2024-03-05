@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
+import {useNavigate } from 'react-router-dom'; // Import Link and useNavigate
 import "../style/page1.scss";
 
 function Page1() {

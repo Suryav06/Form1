@@ -23,14 +23,14 @@ function Page2(props) {
     try {
       console.log(dataToSend);
       const response = await axios.post(
-        "https://form1-qbdl.onrender.com/page2",
+        "http://localhost:5000/page2",
         dataToSend
       );
 
       if (response.data === "0") alert("Invalid Salary");
       else {
         alert("Added");
-        navi("/employees");
+        navi("/page3");
         console.log("Data submitted successfully:", response.data);
       }
     } catch (error) {

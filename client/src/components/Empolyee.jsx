@@ -10,7 +10,7 @@ function Employee() {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const response = await axios.get('https://form1-qbdl.onrender.com/employees');
+                const response = await axios.get('http://localhost:5000/getdata');
                 setEmployees(response.data);
                 setLoading(false);
             } catch (error) {
